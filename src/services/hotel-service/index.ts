@@ -6,16 +6,16 @@ import { checkHotelErrors } from "@/utils/hotel-utils";
 
 async function getHotels(userId: number) {
 
-    checkHotelErrors(userId)
+    await checkHotelErrors(userId)
 
     const hotels = await hotelRepository.getHotels();
     if (!hotels) throw notFoundError();
-
+    if (hotels.length === 0) throw notFoundError();
     return hotels;
 }
 
 async function getHotelRooms(hotelId: number, userId: number){
-    checkHotelErrors(userId)
+    await checkHotelErrors(userId)
 
     const hotel = await hotelRepository.getHotel(hotelId)
     if(!hotel) throw notFoundError();
